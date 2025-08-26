@@ -17,9 +17,13 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
+        "@headlessui/react": "^2.2.7",
         "@inertiajs/react": "^2.1.2",
+        "@tanstack/react-table": "^8.21.3",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
+        "react-select": "^5.10.2",
+        "react-toastify": "^11.0.5",
         "ziggy-js": "^2.5.3"
     }
 }

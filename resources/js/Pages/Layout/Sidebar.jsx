@@ -78,7 +78,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
           <li className={isActive('/categories') ? 'active-page' : ''}>
             <Link
-              href={route('home')}
+              href={route('categories.index')}
               className={
                 'menu-link' + (isActive('/categories') ? ' active-page' : '')
               }
@@ -90,7 +90,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
           <li className={isActive('/products') ? 'active-page' : ''}>
             <Link
-              href={route('home')}
+              href={route('products.index')}
               className={
                 'menu-link' + (isActive('/products') ? ' active-page' : '')
               }
@@ -105,7 +105,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
           <li className={isActive('/transactions') ? 'active-page' : ''}>
             <Link
-              href={route('home')}
+              href={route('transactions.index')}
               className={
                 'menu-link' + (isActive('/transactions') ? ' active-page' : '')
               }
@@ -122,7 +122,7 @@ export default function Sidebar({ isOpen, onClose }) {
           {/* Reports */}
           <li className={isActive('/reports') ? 'active-page' : ''}>
             <Link
-              href={route('home')}
+              href={route('reports.index')}
               className={
                 'menu-link' + (isActive('/reports') ? ' active-page' : '')
               }
