@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,28 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Nama kategori harus diisi.',
+            'name.string' => 'Nama kategori harus berupa string.',
+            'name.max' => 'Nama kategori tidak boleh lebih dari 255 karakter.',
+            'description.string' => 'Deskripsi harus berupa string.',
+            'description.max' => 'Deskripsi tidak boleh lebih dari 1000 karakter.',
+        ];
+    }
+
+    public function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }

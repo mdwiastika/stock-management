@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,32 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'stock' => 'required|integer|min:0',
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'category_id.required' => 'ID kategori harus diisi.',
+            'category_id.exists' => 'ID kategori tidak valid.',
+            'name.required' => 'Nama produk harus diisi.',
+            'name.string' => 'Nama produk harus berupa string.',
+            'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
+            'stock.required' => 'Stok harus diisi.',
+            'stock.integer' => 'Stok harus berupa angka bulat.',
+            'stock.min' => 'Stok tidak boleh kurang dari 0.',
+        ];
+    }
+
+    public function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }
