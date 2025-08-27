@@ -30,7 +30,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
             $query->whereBetween('created_at', [$this->start, $this->end]);
         }
 
-        return $query->get(['id', 'amount', 'product_id', 'created_at']);
+        return $query->get(['id', 'amount', 'product_id', 'status', 'created_at']);
     }
 
     public function map($transaction): array
@@ -40,6 +40,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
             $transaction->id,
             $transaction->product->name,
             $transaction->amount,
+            $transaction->status == 'in' ? 'Masuk' : 'Keluar',
             $transaction->created_at->format('Y-m-d H:i:s'),
         ];
     }
@@ -51,6 +52,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
             'No',
             'Nama Produk',
             'Jumlah',
+            'Status',
             'Tanggal',
         ];
     }
