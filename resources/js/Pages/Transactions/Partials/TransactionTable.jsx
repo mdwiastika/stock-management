@@ -57,6 +57,20 @@ export default function TransactionTable({
     setSorting([{ id: sortBy, desc: sortDirection === 'desc' }])
   }, [sortBy, sortDirection])
 
+  function formatDate(dateStr) {
+    const dateObj = new Date(dateStr)
+
+    const day = String(dateObj.getDate()).padStart(2, '0')
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+    const year = dateObj.getFullYear()
+
+    const hours = String(dateObj.getHours()).padStart(2, '0')
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0')
+    const seconds = String(dateObj.getSeconds()).padStart(2, '0')
+
+    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -83,6 +97,18 @@ export default function TransactionTable({
         id: 'amount',
         enableSearch: true,
         enableSorting: true,
+      },
+      {
+        header: 'Tanggal',
+        accessorKey: 'created_at',
+        id: 'created_at',
+        enableSearch: true,
+        enableSorting: true,
+        cell: (info) => {
+          // date with time
+          const date = formatDate(info.getValue())
+          return <span>{date}</span>
+        },
       },
       {
         header: 'Status',

@@ -7,16 +7,26 @@ use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
+    public function flipDate($input)
+    {
+        if (strpos($input, '-') !== false) {
+            $parts = explode('-', $input);
+            $flipped = array_reverse($parts);
+            return implode('-', $flipped);
+        }
+        return $input;
+    }
     public function index(Request $request)
     {
         $transactions = Transaction::query();
 
-        $allowSearches = ['product.name', 'name', 'amount'];
+        $allowSearches = ['product.name', 'amount', 'created_at'];
         if ($request->has('filters')) {
             foreach ($request->filters as $key => $value) {
                 if ($value && in_array($key, $allowSearches)) {
@@ -26,12 +36,17 @@ class TransactionController extends Controller
                             $query->where($productField, 'ilike', '%' . $value . '%');
                         });
                     } else {
-                        $transactions->where($key, 'ilike', '%' . $value . '%');
+                        if (str_contains($key, 'created_at')) {
+                            $date = $this->flipDate($value);
+                            $transactions->where($key, 'ilike', '%' . $date . '%');
+                        } else {
+                            $transactions->where($key, 'ilike', '%' . $value . '%');
+                        }
                     }
                 }
             }
         }
-        $allowSorts = ['product.name', 'name', 'amount'];
+        $allowSorts = ['product.name', 'amount', 'created_at'];
         if ($request->has('sortBy') && $request->has('sortDirection') && in_array($request->sortBy, $allowSorts)) {
             $productField = str_replace('product.', '', $request->sortBy);
             if ($request->sortBy === 'product.name') {
