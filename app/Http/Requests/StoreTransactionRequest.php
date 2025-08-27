@@ -24,7 +24,6 @@ class StoreTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
             'product_id' => 'required|exists:products,id',
             'amount' => 'required|integer|min:1',
             'status' => 'required|string|in:in,out',
@@ -34,8 +33,6 @@ class StoreTransactionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'ID pengguna harus diisi.',
-            'user_id.exists' => 'ID pengguna tidak valid.',
             'product_id.required' => 'ID produk harus diisi.',
             'product_id.exists' => 'ID produk tidak valid.',
             'amount.required' => 'Jumlah harus diisi.',
