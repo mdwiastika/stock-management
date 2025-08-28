@@ -99,9 +99,9 @@ class TransactionController extends Controller
 
         $product = Product::find($validatedData['product_id']);
         if ($transaction->status === 'out') {
-            $product->increment('stock', $validatedData['amount']);
+            $product->increment('stock', $transaction->amount);
         } else {
-            $product->decrement('stock', $validatedData['amount']);
+            $product->decrement('stock', $transaction->amount);
         }
 
         $transaction->update($validatedData);

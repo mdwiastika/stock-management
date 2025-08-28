@@ -1,7 +1,9 @@
+import { Link, usePage } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
 
 export default function Navbar({ toggleSidebar }) {
   const [isDark, setIsDark] = useState(false)
+  const { auth } = usePage().props
 
   useEffect(() => {
     const dark = localStorage.getItem('color-theme') === 'dark'
@@ -91,7 +93,7 @@ export default function Navbar({ toggleSidebar }) {
               <div className="mb-4 flex items-center justify-between gap-2 rounded-lg bg-primary-50 px-4 py-3 dark:bg-primary-600/25">
                 <div>
                   <h6 className="mb-0 text-lg font-semibold text-neutral-900">
-                    Robiul Hasan
+                    {auth.user.name}
                   </h6>
                   <span className="text-neutral-500">Admin</span>
                 </div>
@@ -106,52 +108,16 @@ export default function Navbar({ toggleSidebar }) {
               <div className="scroll-sm max-h-[400px] overflow-y-auto pe-2">
                 <ul className="flex flex-col">
                   <li>
-                    <a
-                      className="flex items-center gap-4 px-0 py-2 text-black hover:text-primary-600"
-                      href="view-profile.html"
-                    >
-                      <iconify-icon
-                        icon="solar:user-linear"
-                        className="icon text-xl"
-                      ></iconify-icon>
-                      My Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="flex items-center gap-4 px-0 py-2 text-black hover:text-primary-600"
-                      href="email.html"
-                    >
-                      <iconify-icon
-                        icon="tabler:message-check"
-                        className="icon text-xl"
-                      ></iconify-icon>
-                      Inbox
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="flex items-center gap-4 px-0 py-2 text-black hover:text-primary-600"
-                      href="company.html"
-                    >
-                      <iconify-icon
-                        icon="icon-park-outline:setting-two"
-                        className="icon text-xl"
-                      ></iconify-icon>
-                      Setting
-                    </a>
-                  </li>
-                  <li>
-                    <a
+                    <Link
                       className="flex items-center gap-4 px-0 py-2 text-black hover:text-danger-600"
-                      href="javascript:void(0)"
+                      href={route('logout')}
                     >
                       <iconify-icon
                         icon="lucide:power"
                         className="icon text-xl"
                       ></iconify-icon>
                       Log Out
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
