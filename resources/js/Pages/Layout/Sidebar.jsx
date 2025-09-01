@@ -39,17 +39,17 @@ export default function Sidebar({ isOpen, onClose }) {
       <div>
         <a href={`${route('home')}`} className="sidebar-logo">
           <img
-            src="/assets/images/logo.png"
+            src={asset('/assets/images/logo.png')}
             alt="site logo"
             className="light-logo"
           />
           <img
-            src="/assets/images/logo-light.png"
+            src={asset('/assets/images/logo-light.png')}
             alt="site logo"
             className="dark-logo"
           />
           <img
-            src="/assets/images/logo-icon.png"
+            src={asset('/assets/images/logo-icon.png')}
             alt="site logo"
             className="logo-icon"
           />
