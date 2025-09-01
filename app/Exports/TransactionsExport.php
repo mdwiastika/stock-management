@@ -15,6 +15,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
 {
     protected $start;
     protected $end;
+    protected $rowNumber = 0;
 
     public function __construct($start = null, $end = null)
     {
@@ -37,7 +38,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
     {
         Log::info('Mapping transaction: ' . $transaction);
         return [
-            $transaction->id,
+            $this->rowNumber += 1,
             $transaction->product->name,
             $transaction->amount,
             $transaction->status == 'in' ? 'Masuk' : 'Keluar',
