@@ -8,12 +8,16 @@ class AudioController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'audio' => 'required|file|mimes:mp3,wav,ogg|max:102400',
-        ]);
+        try {
+            $request->validate([
+                'audio' => 'required|file|mimes:mp3,wav,ogg|max:102400',
+            ]);
 
-        $path = $request->file('audio')->store('audios', 'public');
+            $path = $request->file('audio')->store('audios', 'public');
 
-        return response()->json(['message' => 'Audio uploaded successfully', 'path' => $path], 201);
+            return response()->json(['message' => 'Audio uploaded successfully', 'path' => $path], 201);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Audio upload failed', 'error' => $th->getMessage()], 500);
+        }
     }
 }
