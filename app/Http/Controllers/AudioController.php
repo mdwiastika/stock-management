@@ -14,9 +14,11 @@ class AudioController extends Controller
             ]);
 
             $path = $request->file('audio')->store('audios', 'public');
+            $path = asset('storage/' . $path);
 
             return response()->json(['message' => 'Audio uploaded successfully', 'path' => $path], 201);
         } catch (\Throwable $th) {
+            // beri error yang lebih informatif
             return response()->json(['message' => 'Audio upload failed', 'error' => $th->getMessage()], 500);
         }
     }
