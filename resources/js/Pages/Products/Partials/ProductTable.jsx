@@ -75,8 +75,26 @@ export default function ProductTable({
         enableSearch: true,
         enableSorting: true,
       },
+      // 👇 KOLOM BARU: STOK MASUK
       {
-        header: 'Stok',
+        header: 'Stok Masuk',
+        accessorKey: 'total_stock_in',
+        id: 'total_stock_in',
+        enableSearch: false,
+        enableSorting: false,
+        cell: (info) => info.getValue() || 0,
+      },
+      // 👇 KOLOM BARU: STOK KELUAR
+      {
+        header: 'Stok Keluar',
+        accessorKey: 'total_stock_out',
+        id: 'total_stock_out',
+        enableSearch: false,
+        enableSorting: false,
+        cell: (info) => info.getValue() || 0,
+      },
+      {
+        header: 'Stok Saat Ini', // Diubah dari 'Stok'
         accessorKey: 'stock',
         id: 'stock',
         enableSearch: true,
