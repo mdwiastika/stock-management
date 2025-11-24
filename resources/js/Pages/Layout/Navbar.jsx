@@ -79,7 +79,7 @@ export default function Navbar({ toggleSidebar }) {
               type="button"
             >
               <img
-                src="/stock/assets/images/user.png"
+                src="/assets/images/user.png"
                 alt="image"
                 className="object-fit-cover h-10 w-10 rounded-full"
               />
